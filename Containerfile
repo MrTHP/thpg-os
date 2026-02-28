@@ -29,8 +29,14 @@ FROM ghcr.io/ublue-os/bazzite-dx-nvidia-gnome:latest
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-# Désactiver terra-mesa pour éviter les erreurs GPG lors de la génération ISO
-RUN dnf config-manager --set-disabled terra-mesa || true
+RUN python3 -c "
+import configparser, os
+cfg = configparser.ConfigParser()
+cfg.read('/etc/yum.repos.d/terra.repo')
+if 'terra-mesa' in cfg: cfg.remove_section('terra-mesa')
+with open('/etc/yum.repos.d/terra.repo', 'w') as f: cfg.write(f)
+" || true
+
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \

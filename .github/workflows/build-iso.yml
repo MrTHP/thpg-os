@@ -1,0 +1,33 @@
+name: Build ISO
+
+on:
+  workflow_dispatch:  # déclenchement manuel depuis l'onglet Actions
+  release:
+    types: [created]
+
+jobs:
+  build-iso:
+    name: Build ISO
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      packages: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build ISO
+        id: build-iso
+        uses: osbuild/bootc-image-builder-action@v0.1.0
+        with:
+          image: ghcr.io/mrthp/thpg-os:latest
+          types: |
+            anaconda-iso
+
+      - name: Upload ISO as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: thpg-os-install-iso
+          path: ${{ steps.build-iso.outputs.output-directory }}
+          if-no-files-found: error

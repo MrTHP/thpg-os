@@ -45,14 +45,15 @@ jobs:
             --rm --privileged \
             --security-opt label=type:unconfined_t \
             -v $(pwd)/output:/output \
+            -v $(pwd)/disk_config/config.toml:/config.toml:ro \
             -v $(pwd)/RPM-GPG-KEY-terra43-mesa:/etc/pki/rpm-gpg/RPM-GPG-KEY-terra43-mesa:ro \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             quay.io/centos-bootc/bootc-image-builder:latest \
             build --output /output \
             --type anaconda-iso \
+            --config /config.toml \
             --rootfs xfs \
             ghcr.io/mrthp/thpg-os:latest
-
 
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@v4

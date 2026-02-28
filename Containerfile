@@ -29,6 +29,9 @@ FROM ghcr.io/ublue-os/bazzite-dx-nvidia-gnome:latest
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+# Fix GPG key for terra-mesa repo
+RUN rpm --import https://terra.fyralabs.com/RPM-GPG-KEY-terra43-mesa || true
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \

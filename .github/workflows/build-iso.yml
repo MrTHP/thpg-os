@@ -17,17 +17,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Podman
+        run: sudo apt-get install -y podman
+
+      - name: Create output directory
+        run: mkdir -p output
+
       - name: Build ISO
-        id: build-iso
-        uses: osbuild/bootc-image-builder-action@main
-        with:
-          image: ghcr.io/mrthp/thpg-os:latest
-          types: |
-            anaconda-iso
+        run: |
+          sudo podman run \
+            --rm --privileged \
+            --security-opt label=type:unconfined_t \
+            -v $(pwd)/output:/output \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            quay.io/centos-bootc/bootc-image-builder:latest \
+            build --output /output \
+            --type anaconda-iso \
+            ghcr.io/mrthp/thpg-os:latest
 
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@v4
         with:
           name: thpg-os-install-iso
-          path: ${{ steps.build-iso.outputs.output-directory }}
+          path: output/bootiso/
           if-no-files-found: error

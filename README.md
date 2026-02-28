@@ -1,7 +1,7 @@
 # THPG-OS – The High Performance Gaming OS
 
 
- ![image](https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/0e/b5/38/0eb53821-d96c-43a0-9d3c-98042da7b033/ebcac104-149a-4c22-a51b-35da051a0983/51c0d20e-75c6-4f13-849e-f9371894d56a/6384df21-9608-4f86-b251-1f93c753d8a1.jpg?sv=2025-01-05&st=2026-02-28T02%3A37%3A44Z&se=2026-02-28T03%3A37%3A44Z&sr=b&sp=r&sig=8wvw45JJMz2cY46nVJgFN8Ym%2FrCTqgXjBPUL1f2GK4E%3D) 
+ ![image](https://mrthp.ovh/banner.jpg?sv=2025-01-05&st=2026-02-28T02%3A37%3A44Z&se=2026-02-28T03%3A37%3A44Z&sr=b&sp=r&sig=8wvw45JJMz2cY46nVJgFN8Ym%2FrCTqgXjBPUL1f2GK4E%3D) 
 
 
 **Optimisé pour les gamers, propulsé par Linux.**

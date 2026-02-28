@@ -19,7 +19,7 @@ jobs:
 
       - name: Build ISO
         id: build-iso
-        uses: osbuild/bootc-image-builder-action@v0.1.0
+        uses: osbuild/bootc-image-builder-action@main
         with:
           image: ghcr.io/mrthp/thpg-os:latest
           types: |

@@ -54,7 +54,7 @@ jobs:
             ghcr.io/mrthp/thpg-os:latest
 
       - name: Upload ISO as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: thpg-os-install-iso
           path: output/bootiso/

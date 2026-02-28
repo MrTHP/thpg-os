@@ -1,7 +1,7 @@
 name: Build ISO
 
 on:
-  workflow_dispatch:  # déclenchement manuel depuis l'onglet Actions
+  workflow_dispatch:
   release:
     types: [created]
 
@@ -19,6 +19,14 @@ jobs:
 
       - name: Install Podman
         run: sudo apt-get install -y podman
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io \
+            -u ${{ github.actor }} --password-stdin
+
+      - name: Pull image
+        run: sudo podman pull ghcr.io/mrthp/thpg-os:latest
 
       - name: Create output directory
         run: mkdir -p output

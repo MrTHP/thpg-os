@@ -28,23 +28,13 @@ jobs:
       - name: Pull image
         run: sudo podman pull ghcr.io/mrthp/thpg-os:latest
 
-      - name: Fix terra-mesa GPG
+      - name: Extract GPG key from image
         run: |
-          # Monter l'image et modifier le fichier repo directement
-          CONTAINER=$(sudo podman create --entrypoint /bin/bash \
-            ghcr.io/mrthp/thpg-os:latest)
-          sudo podman mount $CONTAINER > /tmp/mountpoint
-          MOUNTPOINT=$(cat /tmp/mountpoint)
-          
-          # Désactiver terra-mesa dans le filesystem monté
-          sudo sed -i '/^\[terra-mesa\]/,/^\[/{s/^enabled=1/enabled=0/}' \
-            "$MOUNTPOINT/etc/yum.repos.d/terra.repo"
-          
-          # Committer et nettoyer
-          sudo podman commit $CONTAINER ghcr.io/mrthp/thpg-os:iso-build
-          sudo podman umount $CONTAINER
+          CONTAINER=$(sudo podman create ghcr.io/mrthp/thpg-os:latest)
+          sudo podman cp \
+            $CONTAINER:/etc/pki/rpm-gpg/RPM-GPG-KEY-terra43-mesa \
+            ./RPM-GPG-KEY-terra43-mesa
           sudo podman rm $CONTAINER
-
 
       - name: Create output directory
         run: mkdir -p output

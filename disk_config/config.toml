@@ -1,4 +1,1 @@
-[[customizations.user]]
-name = "mrthp"
-password = "thpgos"
-groups = ["wheel", "video", "render"]
+

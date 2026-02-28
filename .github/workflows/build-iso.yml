@@ -30,12 +30,21 @@ jobs:
 
       - name: Fix terra-mesa GPG
         run: |
-          CONTAINER=$(sudo podman create ghcr.io/mrthp/thpg-os:latest)
-          sudo podman start $CONTAINER
-          sudo podman exec $CONTAINER \
-            sed -i 's/^enabled=1/enabled=0/' /etc/yum.repos.d/terra.repo
+          # Monter l'image et modifier le fichier repo directement
+          CONTAINER=$(sudo podman create --entrypoint /bin/bash \
+            ghcr.io/mrthp/thpg-os:latest)
+          sudo podman mount $CONTAINER > /tmp/mountpoint
+          MOUNTPOINT=$(cat /tmp/mountpoint)
+          
+          # Désactiver terra-mesa dans le filesystem monté
+          sudo sed -i '/^\[terra-mesa\]/,/^\[/{s/^enabled=1/enabled=0/}' \
+            "$MOUNTPOINT/etc/yum.repos.d/terra.repo"
+          
+          # Committer et nettoyer
           sudo podman commit $CONTAINER ghcr.io/mrthp/thpg-os:iso-build
-          sudo podman rm -f $CONTAINER
+          sudo podman umount $CONTAINER
+          sudo podman rm $CONTAINER
+
 
       - name: Create output directory
         run: mkdir -p output

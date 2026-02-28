@@ -35,3 +35,46 @@ THPG-OS est une distribution Linux spécialement conçue pour les joueurs et les
 2. **Flashing sur une clé USB** :
    ```bash
    sudo dd if=thpg-os.iso of=/dev/sdX bs=4M status=progress oflag=sync
+
+   (Remplacez /dev/sdX par le périphérique de votre clé USB.)
+
+Démarrer sur la clé USB et suivre les instructions d’installation.
+
+🎮 Fonctionnalités Gaming
+Steam et Proton : Prise en charge native pour jouer aux jeux Windows sous Linux.
+OBS Studio : Préinstallé pour le streaming et l’enregistrement.
+Discord : Intégré pour rester connecté avec ta communauté.
+MangoHud : Outil de monitoring des performances en jeu.
+
+🛠️ Personnalisation
+THPG-OS est conçu pour être personnalisable. Voici quelques idées :
+
+Changer d’environnement de bureau (GNOME/KDE).
+Ajouter des thèmes et icônes personnalisés.
+Configurer les profils de performance pour les jeux.
+
+📦 Paquets inclus
+Catégorie,Exemples de logiciels préinstallés
+Gaming,Steam, Lutris, Heroic, MangoHud
+Multimédia,OBS Studio, Kdenlive, VLC
+Utilitaires,GNOME Tweaks, KDE System Settings
+Développement,Git, Code (VS Code), Podman
+
+🤝 Contribuer
+Tu veux contribuer à THPG-OS ? Voici comment faire :
+
+Fork ce dépôt.
+Clone ton fork localement.
+Crée une branche pour tes modifications.
+Soumets une Pull Request !
+
+📜 Licence
+THPG-OS est distribué sous la licence MIT.
+
+📧 Contact
+GitHub : @MrTHP
+
+💡 Remarque : THPG-OS est un projet en développement actif. N’hésite pas à ouvrir une issue pour signaler un bug ou proposer une amélioration !
+
+
+

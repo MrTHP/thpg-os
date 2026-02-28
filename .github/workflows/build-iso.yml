@@ -41,6 +41,7 @@ jobs:
             quay.io/centos-bootc/bootc-image-builder:latest \
             build --output /output \
             --type anaconda-iso \
+            --rootfs xfs \
             ghcr.io/mrthp/thpg-os:latest
 
       - name: Upload ISO as artifact

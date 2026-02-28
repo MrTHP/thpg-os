@@ -30,11 +30,11 @@ jobs:
 
       - name: Extract GPG key from image
         run: |
-          CONTAINER=$(sudo podman create ghcr.io/mrthp/thpg-os:latest)
-          sudo podman cp \
-            $CONTAINER:/etc/pki/rpm-gpg/RPM-GPG-KEY-terra43-mesa \
+          # Monter l'image directement (pas besoin de conteneur)
+          MOUNTPOINT=$(sudo podman image mount ghcr.io/mrthp/thpg-os:latest)
+          sudo cp "$MOUNTPOINT/etc/pki/rpm-gpg/RPM-GPG-KEY-terra43-mesa" \
             ./RPM-GPG-KEY-terra43-mesa
-          sudo podman rm $CONTAINER
+          sudo podman image unmount ghcr.io/mrthp/thpg-os:latest
 
       - name: Create output directory
         run: mkdir -p output
@@ -45,12 +45,14 @@ jobs:
             --rm --privileged \
             --security-opt label=type:unconfined_t \
             -v $(pwd)/output:/output \
+            -v $(pwd)/RPM-GPG-KEY-terra43-mesa:/etc/pki/rpm-gpg/RPM-GPG-KEY-terra43-mesa:ro \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             quay.io/centos-bootc/bootc-image-builder:latest \
             build --output /output \
             --type anaconda-iso \
             --rootfs xfs \
-            ghcr.io/mrthp/thpg-os:iso-build
+            ghcr.io/mrthp/thpg-os:latest
+
 
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@v4

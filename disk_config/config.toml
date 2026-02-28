@@ -2,10 +2,3 @@
 name = "mrthp"
 password = "thpgos"
 groups = ["wheel", "video", "render"]
-
-[customizations.installer.kickstart]
-contents = """
-zerombr
-clearpart --all --initlabel
-autopart --type=plain --fstype=xfs --nohome
-"""

@@ -28,6 +28,15 @@ jobs:
       - name: Pull image
         run: sudo podman pull ghcr.io/mrthp/thpg-os:latest
 
+      - name: Fix terra-mesa GPG
+        run: |
+          CONTAINER=$(sudo podman create ghcr.io/mrthp/thpg-os:latest)
+          sudo podman start $CONTAINER
+          sudo podman exec $CONTAINER \
+            sed -i 's/^enabled=1/enabled=0/' /etc/yum.repos.d/terra.repo
+          sudo podman commit $CONTAINER ghcr.io/mrthp/thpg-os:iso-build
+          sudo podman rm -f $CONTAINER
+
       - name: Create output directory
         run: mkdir -p output
 
@@ -42,7 +51,7 @@ jobs:
             build --output /output \
             --type anaconda-iso \
             --rootfs xfs \
-            ghcr.io/mrthp/thpg-os:latest
+            ghcr.io/mrthp/thpg-os:iso-build
 
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@v4
